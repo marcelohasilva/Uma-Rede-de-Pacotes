@@ -57,6 +57,16 @@ function CadastroDispositivo({
       return;
     }
 
+    const ipJaEstaEmUso = dispositivos.some((dispositivo) =>
+      dispositivo.ip.trim() === ipNormalizado
+      || dispositivo.interfaces.some((interfaceRede) => interfaceRede.ip.trim() === ipNormalizado),
+    );
+
+    if (ipJaEstaEmUso) {
+      mostrarErro("Este endereço IP já está sendo utilizado por outro dispositivo.");
+      return;
+    }
+
     if (!nomeInterface.trim()) {
       mostrarErro("Informe o nome da interface.");
       return;
